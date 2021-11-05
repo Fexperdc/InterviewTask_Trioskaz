@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Src/MainScenes/Main.cs" type="Script" id=1]
+[ext_resource path="res://Src/World/GameWorld.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Src/Player/GamePlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Src/objects/Key.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Src/objects/Door.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Src/objects/Door.cs" type="Script" id=6]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.207843, 0.207843, 0.207843, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 9.531, 1, 26.2529 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+player = NodePath("GameWorld/Player")
+
+[node name="GameWorld" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="GameWorld" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.26323, 0 )
+movementSpeed = 24.0
+movementLerpW = 6.0
+
+[node name="SpotLight" type="SpotLight" parent="GameWorld/Player"]
+transform = Transform( 1, 0, 0, 0, -0.317669, 0.948202, 0, -0.948202, -0.317669, 0, 2.31891, 0 )
+light_energy = 1.63
+spot_range = 10.1693
+spot_angle = 27.3542
+
+[node name="MeshInstance" type="MeshInstance" parent="GameWorld"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0059, 4.82733 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Env" type="Spatial" parent="GameWorld"]
+
+[node name="StaticBody" type="KinematicBody" parent="GameWorld/Env"]
+
+[node name="CollisionShape" type="CollisionShape" parent="GameWorld/Env/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="GameWorld/Env/StaticBody"]
+transform = Transform( 9.59536, 0, 0, 0, 1, 0, 0, 0, 26.2898, 0, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="StaticBody2" type="KinematicBody" parent="GameWorld/Env"]
+transform = Transform( -0.352757, 0, 0, 0, 0.423307, 0, 0, 0, 0.057068, 0, 1.71396, 10.5151 )
+
+[node name="CollisionShape" type="CollisionShape" parent="GameWorld/Env/StaticBody2"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="GameWorld/Env/StaticBody2"]
+transform = Transform( 9.59536, 0, 0, 0, 1, 0, 0, 0, 26.2898, 0, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Key" parent="GameWorld" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55311, 12.3869 )
+
+[node name="Key2" parent="GameWorld" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130119, 1.63257, 4.27763 )
+KeyID = 1
+
+[node name="Key3" parent="GameWorld" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32162, 2.14377, -21.0917 )
+KeyID = 2
+
+[node name="Door" parent="GameWorld" instance=ExtResource( 5 )]
+transform = Transform( 0.51541, 0, 0, 0, 0.51541, 0, 0, 0, 0.874646, 1.17827, 2.57789, -3.46908 )
+script = ExtResource( 6 )
+keyID = 0
+
+[node name="Door2" parent="GameWorld" instance=ExtResource( 5 )]
+transform = Transform( 0.51541, 0, 0, 0, 0.51541, 0, 0, 0, 0.874646, -0.955144, 2.57789, -3.46908 )
+script = ExtResource( 6 )
+keyID = 1
+
+[node name="Door3" parent="GameWorld" instance=ExtResource( 5 )]
+transform = Transform( 0.51541, 0, 0, 0, 0.51541, 0, 0, 0, 0.874646, -2.75155, 2.57789, -3.46908 )
+script = ExtResource( 6 )
+keyID = 2

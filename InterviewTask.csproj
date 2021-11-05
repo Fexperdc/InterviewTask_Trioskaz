@@ -1,0 +1,15 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Src\PlayerA\**" />
+    <EmbeddedResource Remove="Src\PlayerA\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\MainScenes\Main.tscn" />
+    <None Include="Src\objects\Key.tscn" />
+    <None Include="Src\Utils\FirstPersonCamera.tscn" />
+    <None Include="Src\World\GameWorld.tscn" />
+  </ItemGroup>
+</Project>

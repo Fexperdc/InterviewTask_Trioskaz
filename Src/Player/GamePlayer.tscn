@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Src/Player/GamePlayer.cs" type="Script" id=1]
+[ext_resource path="res://Src/Utils/FirstPersonCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Src/Player/Inventory.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 1.04855
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.380392, 0.301961, 0.301961, 1 )
+metallic = 1.0
+
+[sub_resource type="CapsuleMesh" id=3]
+material = SubResource( 2 )
+
+[node name="GamePlayer" type="KinematicBody"]
+script = ExtResource( 1 )
+gravity = Vector3( 0, -9.8, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="FirstPersonCamera" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.214523, 0, 0.650005 )
+_person = NodePath("..")
+interpolateWeight = 0.5
+sensitivity = 0.7
+
+[node name="EyesRayCast" type="RayCast" parent="FirstPersonCamera"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, 3.613 )
+
+[node name="Inventory" parent="." instance=ExtResource( 3 )]
